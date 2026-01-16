@@ -1,249 +1,219 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% block content %}
 
 <style>
   * {
-    padding: 0;
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Orbitron", sans-serif;
   }
 
   body {
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    background-color: #111341;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .bg-containertimerpage {
-    background-image: url("{% static 'Assets/bg25latest.png' %}");
-    background-size: 100% 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #111341;
-    padding-top: 3rem;
-  }
-
-  .outerBorder {
-    position: absolute;
-    width: 70%;
-    height: auto;
-    top: 15%;
-    left: 15%;
-    border-radius: 1rem;
-    border: 2px solid #fff;
-    /* background-image: url(../static/Assets/bg25.png);
-      background-size: 100% 100%; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    min-height: 100vh;
+    background: url("{% static 'Assets/bg25latest.png' %}") center/cover fixed no-repeat;
+    color: #fff;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    background-color: #22254a;
-    animation: fadeInScale 1s ease-out forwards;
-  }
-  @keyframes fadeInScale {
-    0% {
-      opacity: 0; /* Start invisible */
-      transform: scale(0.95); /* Slightly smaller */
-    }
-    100% {
-      opacity: 1; /* Fully visible */
-      transform: scale(1); /* Original size */
-    }
-  }
-
-  .container-fluid {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    /* height: 100%; */
   }
 
-  .logo-imagetimerpage {
-    width: 7rem;
-    height: auto;
-    position: absolute;
-    top: 2rem;
-    left: 2rem;
-  }
-
-  .backButton {
-    position: absolute;
-    border: 2px solid #fff;
-    border-radius: 1rem;
-    font-size: 1.5rem;
-    padding: 0px 10px;
-    right: 4%;
-    top: 5%;
-    font-family: "Poppins", sans-serif;
-    color: white;
-    background-color: #0000004d;
-    text-align: center;
+  /* ===== TOP BAR (Consistent with CIT 9.0 Templates) ===== */
+  .top-bar {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    border-radius: 40px;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 30px;
     z-index: 100;
   }
 
-  .backButton:hover {
-    background-color: white;
-    transform: scale(1.1);
-  }
-
-  .main-headingtimerpage {
-    font-size: 35px;
-    font-weight: 400;
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    text-decoration: none;
     color: white;
-    letter-spacing: 5px;
-    margin-top: 25px;
-    text-align: center;
   }
 
-  .paratimerpage1,
-  .paratimerpage2,
-  .paratimerpage3 {
-    font-size: 25px;
-    font-weight: 400;
-    color: white;
-    padding: 20px;
-    letter-spacing: 5px;
-    text-align: center;
-    width: 80%;
+  .brand img {
+    height: 36px;
   }
 
-  .paratimerpage2 {
-    font-size: 28px;
-    font-weight: 350;
-    padding: 25px;
+  .back-btn {
+    padding: 8px 22px;
+    border-radius: 30px;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+
+  .back-btn:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  /* ===== TIMER CARD (Glassmorphism) ===== */
+  .timer-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .timer-card {
+    width: 100%;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(15px);
+    border-radius: 30px;
+    padding: 50px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    animation: fadeInScale 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeInScale {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .main-heading {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
   }
 
   #demo {
-    font-size: 2rem;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #7de0ff; /* Light Blue Accent */
+    text-shadow: 0 0 20px rgba(125, 224, 255, 0.5);
+    margin: 30px 0;
+  }
+
+  .info-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+
+  .highlight-link {
+    color: #77e6ff;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 1px solid transparent;
+    transition: 0.3s;
+  }
+
+  .highlight-link:hover {
+    border-bottom: 1px solid #77e6ff;
+  }
+
+  .all-the-best {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f9d342; /* Yellow Accent */
+    letter-spacing: 2px;
+    margin-top: 30px;
   }
 
   @media screen and (max-width: 768px) {
-    .backButton {
-      top: 6%;
-      right: 7%;
-    }
-
-    .logo-imagetimerpage {
-      width: 5rem;
-      top: 2rem;
-      left: 1rem;
-    }
-
-    .main-headingtimerpage {
-      font-size: 1.25rem;
-    }
-
-    .paratimerpage1,
-    .paratimerpage2,
-    .paratimerpage3 {
-      font-size: 1rem;
-      padding: 10px;
-      width: 90%;
-    }
-
-    #demo {
-      font-size: 1.5rem;
-    }
+    .main-heading { font-size: 1.2rem; }
+    #demo { font-size: 2rem; }
+    .info-text { font-size: 0.95rem; }
+    .timer-card { padding: 30px 20px; }
+    .brand span { display: none; }
   }
 </style>
 
-<a href="{% url 'cit2020:index' %}">
-  <button type="button" class="btn backButton"><</button>
-</a>
+<div class="top-bar">
+  <a href="{% url 'cit2020:index' %}" class="brand">
+    <img src="{% static 'Assets/whiteIste.png' %}" alt="Logo" />
+    <span>ISTE - CIT 9.0</span>
+  </a>
+  <a href="{% url 'cit2020:index' %}" class="back-btn">← BACK TO HOME</a>
+</div>
 
-<div class="bg-containertimerpage">
+<div class="timer-wrapper">
   {% if user and not user.is_anonymous %}
-  <div class="containertimerpage-1">
-    <div class="text-center conttimerpage">
-      <a href="{% url 'cit2020:index' %}">
-        <img
-          class="logo-imagetimerpage"
-          src="{% static './Assets/whiteIste.png' %}"
-        />
-      </a>
-    </div>
-    <div class="outerBorder">
-      <h1 class="main-headingtimerpage">TEST WILL START AFTER</h1>
-      <p id="demo" style="color: red"></p>
-      <p class="paratimerpage1">
-        Register at
-        <a
-          href="https://unstop.com/o/y0wpsZV?lb=xoZUCgKu"
-          style="text-decoration: none; color: aquamarine; font-weight: bold"
-          >Unstop</a
-        >
-        platform to confirm your registration.
-      </p>
-      <p class="paratimerpage2">
-        READ THE
-        <a
-          href="{% url 'cit2020:rules' %}"
-          style="text-decoration: none; color: aquamarine; font-weight: bold"
-          >RULES</a
-        >
-        CAREFULLY BEFORE STARTING YOUR TEST
-      </p>
-      <p class="paratimerpage3">ALL THE BEST!</p>
-    </div>
+  <div class="timer-card">
+    <h1 class="main-heading">Test Is Yet To Start</h1>
+    
+    <div id="demo">00d 00h 00m 00s</div>
+
+    <p class="info-text">
+      Register at 
+      <a href="https://unstop.com/o/y0wpsZV?lb=xoZUCgKu" class="highlight-link">Unstop</a> 
+      platform to confirm your registration.
+    </p>
+
+    <p class="info-text">
+      Read the 
+      <a href="{% url 'cit2020:rules' %}" class="highlight-link">RULES</a> 
+      carefully before starting your test.
+    </p>
+
+    <p class="all-the-best">ALL THE BEST!</p>
   </div>
   {% endif %}
 </div>
 
 <script>
-   True = 1
-   False=0
-   var countDownDate
-   if ({{player.qualified}}) {
-     // Final slot date
-     countDownDate = new Date("Jan 27 , 2025 21:00:00").getTime();
+   // Preserving your exact logic as requested
+   True = 1;
+   False = 0;
+   var countDownDate;
+   
+   if ({{player.qualified}}==true) {
+     countDownDate = new Date("Jan 17 , 2026 21:00:00").getTime();
    }
    else if ({{player.slot}}==1) {
-     // slot 1 date
-     countDownDate = new Date("Jan 24 , 2025 21:00:00").getTime();
+     countDownDate = new Date("Jan 17 , 2026 19:30:00").getTime();
    }
    else if ({{player.slot}}==2) {
-     // slot 2 date
-     countDownDate = new Date("Jan 25 , 2025 21:00:00").getTime();
-   }
-   else if ({{player.slot}}==3) {
-     // slot 3 date
-     countDownDate = new Date("Jan 26 , 2025 21:00:00").getTime();
+     countDownDate = new Date("Jan 17 , 2026 21:00:00").getTime();
    }
    else{
-     // final slot date
-     countDownDate = new Date("Jan 27 , 2025 21:00:00").getTime();
+     countDownDate = new Date("Jan 17 , 2026 21:00:00").getTime();
    }
 
-
-  // Update the count down every 1 second
   var x = setInterval(function () {
-
-      // Get today's date and time
       var now = new Date().getTime();
-
-      // Find the distance between now and the count down date
       var distance = countDownDate - now;
 
-      // Time calculations for days, hours, minutes and seconds
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      // Display the result in the element with id="demo"
       document.getElementById("demo").innerHTML = days + "d " + hours + "h "
           + minutes + "m " + seconds + "s ";
 
-      // If the count down is finished, write some text
       if (distance < 0) {
           clearInterval(x);
           document.getElementById("demo").innerHTML = "REFRESH TO START!";
+          document.getElementById("demo").style.color = "#4ade80"; // Success Green
       }
   }, 1000);
 </script>

@@ -1,213 +1,192 @@
-{% extends 'base.html' %} {% block content %} {% load static %}
+{% extends 'base.html' %} 
+{% block content %} 
+{% load static %}
 
 <style>
   * {
-    padding: 0;
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    font-family: "Orbitron", sans-serif;
   }
 
   body {
-    font-family: "Poppins", sans-serif;
-    background-color: #111334;
-    color: white;
-    background-image: url("{% static 'Assets/bg25latest.png' %}");
-    background-size: 100% 100%;
+    min-height: 100vh;
+    background: url("{% static 'Assets/bg25latest.png' %}") center/cover fixed no-repeat;
+    color: #fff;
+    overflow: hidden;
   }
 
+  /* ===== TOP GLASS BAR (Consistent with Quiz) ===== */
+  .top-bar {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    border-radius: 40px;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 100;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+  }
+
+  .brand img {
+    height: 36px;
+  }
+
+  .back-btn {
+    padding: 8px 22px;
+    border-radius: 30px;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+
+  .back-btn:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  /* ===== RESULT CARD (Glassmorphism) ===== */
   .bg-container {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    padding: 20px;
   }
 
-  .outerBorder {
-    width: 90%;
-    max-width: 900px;
-    padding: 2rem;
-    border: 2px solid white;
-    border-radius: 20px;
-    background-color: #22254a;
-    animation: fadeInScale 1s ease-out forwards;
+  .result-card {
+    width: 100%;
+    max-width: 800px;
+    padding: 50px 30px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(15px);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    animation: fadeInScale 0.8s ease-out forwards;
   }
+
   @keyframes fadeInScale {
-    0% {
-      opacity: 0; /* Start invisible */
-      transform: scale(0.95); /* Slightly smaller */
-    }
-    100% {
-      opacity: 1; /* Fully visible */
-      transform: scale(1); /* Original size */
-    }
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
   }
 
-  .image {
-    position: absolute;
-    width: 5rem;
-    height: auto;
-    top: 1rem;
-    left: 1rem;
+  .status-header {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #7de0ff; /* Light Blue Accent */
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 15px rgba(125, 224, 255, 0.4);
   }
 
-  .backButton {
-    position: absolute;
-    border: 2px solid #fff;
-    border-radius: 1rem;
-    font-size: 1.5rem;
-    padding: 0 10px;
-    right: 4%;
-    top: 4%;
-    font-family: "Poppins", sans-serif;
-    color: white;
-    background-color: #0000004d;
-    text-align: center;
-    z-index: 100;
-    cursor: pointer;
+  .score-display {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .backButton:hover {
-    background-color: #fff;
-    color: black;
-    transform: scale(1.1);
+  .score-label {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-bottom: 5px;
   }
 
-  .content {
-    text-align: center;
+  .score-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #4ecdc4; /* Teal Accent from your original code */
   }
 
-  .para-1 {
-    font-size: 2rem;
-    margin-bottom: 4rem; /* Adjusted spacing */
+  .lboard-link-box {
+    margin-top: 20px;
   }
 
-  .para-2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem; /* Added spacing for clarity */
-  }
-
-  .para-3 {
-    font-size: 1.5rem;
-    margin-top: 2rem; /* Added spacing for clarity */
-  }
-
-  .image {
-    width: 9rem;
-    height: auto;
-    top: 1rem;
-    left: 1rem;
-  }
-
-  a {
-    text-decoration: none;
-    color: #0d6efd;
+  .btn-lboard {
+    display: inline-block;
+    padding: 15px 40px;
+    border-radius: 50px;
+    background: #77e6ff;
+    color: #000;
     font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.4s;
   }
 
-  a:hover {
-    text-decoration: underline;
-  }
-  @media (max-width: 891px) {
-    .outerBorder {
-      padding: 4rem 2rem;
-    }
-
-    .image {
-      width: 7.5rem;
-      height: auto;
-      top: 1rem;
-      left: 1rem;
-    }
+  .btn-lboard:hover {
+    background: #fff;
+    box-shadow: 0 0 20px rgba(119, 230, 255, 0.6);
+    transform: translateY(-3px);
   }
 
+  /* ===== MOBILE RESPONSIVENESS ===== */
   @media (max-width: 768px) {
-    .para-1 {
-      font-size: 1.5rem;
-      margin-bottom: 5rem; /* Adjusted spacing */
-    }
-
-    .para-2 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem; /* Added spacing for clarity */
-    }
-
-    .para-3 {
-      font-size: 1.2rem;
-      margin-top: 2rem; /* Added spacing for clarity */
-    }
-    .image {
-      width: 7rem;
-      height: auto;
-      top: 1rem;
-      left: 1rem;
-    }
-  }
-  @media (max-width: 480px) {
-    .para-1 {
-      font-size: 1.2rem;
-      margin-bottom: 3rem; /* Adjusted spacing */
-    }
-
-    .para-2 {
-      font-size: 1rem;
-      margin-bottom: 0.5rem; /* Added spacing for clarity */
-    }
-
-    .para-3 {
-      font-size: 1rem;
-      margin-top: 1rem; /* Added spacing for clarity */
-    }
-    .image {
-      width: 5rem;
-      height: auto;
-      top: 1rem;
-      left: 1rem;
-    }
+    .status-header { font-size: 1.5rem; }
+    .score-value { font-size: 1.6rem; }
+    .top-bar { padding: 10px 15px; border-radius: 20px; }
+    .brand span { display: none; } /* Hide text on small screens */
   }
 </style>
 
+<div class="top-bar">
+  <div class="brand">
+    <img src="{% static './Assets/whiteIste.png' %}" alt="Logo" />
+    <span>ISTE - CIT 9.0</span>
+  </div>
+  <a href="{% url 'cit2020:index' %}" class="back-btn">← BACK TO HOME</a>
+</div>
+
 <div class="bg-container">
-  <a href="{% url 'cit2020:index' %}">
-    <button type="button" class="btn backButton"><</button>
-  </a>
-  <img class="image" src="{% static './Assets/whiteIste.png' %}" alt="Logo" />
-  <div class="outerBorder">
-    <div class="content">
-      <h2 class="para-1"><strong>You Have Attempted All Questions</strong></h2>
+  <div class="result-card">
+    <h2 class="status-header">Test Completed</h2>
+    
+    <div class="score-display">
       {% if player.qualified == True %}
-      <h2 class="para-2">
-        <strong
-          >Your Preliminary Round Score is
-          <span style="color: #4ecdc4">{{ player.score }}</span> <br />and Final
-          Round Score is
-          <span style="color: #4ecdc4">{{ player.final_score }}</span>
-        </strong>
-      </h2>
-      <h2 class="para-3">
-        <strong
-          >Visit <a href="{% url 'cit2020:lboard' %}">LEADERBOARD</a> for
-          Rank</strong
-        >
-      </h2>
+        <div class="mb-4">
+          <p class="score-label">Preliminary Round Score</p>
+          <p class="score-value">{{ player.score }}</p>
+        </div>
+        <div>
+          <p class="score-label">Final Round Score</p>
+          <p class="score-value">{{ player.final_score }}</p>
+        </div>
       {% else %}
-      <h2 class="para-2">
-        <strong
-          >Your Preliminary Round Score is
-          <span style="color: #4ecdc4">{{ player.score }}</span>
-        </strong>
-      </h2>
-      <h2 class="para-3">
-        <strong
-          >Visit
-          <a
-            href="{% url 'cit2020:lboard' slot=player.slot %}"
-            style="color: #4ecdc4"
-            >LEADERBOARD</a
-          >
-          for Rank</strong
-        >
-      </h2>
+        <div>
+          <p class="score-label">Your Final Score</p>
+          <p class="score-value">{{ player.score }}</p>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="lboard-link-box">
+      <p class="mb-3 opacity-75">Compare your performance with others</p>
+      {% if player.qualified == True %}
+        <a href="{% url 'cit2020:lboard' %}" class="btn-lboard">Global Leaderboard</a>
+      {% else %}
+        <a href="{% url 'cit2020:lboard' slot=player.slot %}" class="btn-lboard">View Rank</a>
       {% endif %}
     </div>
   </div>

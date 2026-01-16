@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from cit2020.views import faq,schedule
 
 app_name='cit2020'
 urlpatterns = [
@@ -15,4 +16,6 @@ urlpatterns = [
     path('profile/', views.view_profile , name='view_profile'),
     path('profile/update', views.update_profile , name='update_profile'),
     path('qualify/<int:cutoff>', views.qualify , name='qualify'),
+    path('faq/', faq , name='faq'),
+    path('schedule/', schedule , name='schedule'),
 ]

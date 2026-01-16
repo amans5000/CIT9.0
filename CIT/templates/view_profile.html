@@ -1,241 +1,232 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
+{% block content %} 
 {% load static %}
-{% block content %}
 {% load widget_tweaks %}
 
 <style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        letter-spacing: 1px;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #111344;
-        color: #fff;
-        overflow-x: hidden;
-        background-image: url("{% static 'Assets/bg25latest.png' %}");
-        background-size: 100% 100%;
-        height: 100vh;
-        overflow-y: auto; /* Enable scrolling on the body */
-    }
-
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        font-family: "Orbitron", sans-serif;
     }
 
-    .home-logo {
-        position: absolute;
-        top: 1rem;
-        left: 1rem;
-        height: auto;
-        width: 100px;
-        cursor: pointer;
-        z-index: 10;
-    }
-
-    .outerBorder-viewProfile {
-        position: relative;
-        width: 95%;
-        max-width: 1200px;
-        margin: 2rem auto;
-        padding: 2rem;
-        border-radius: 20px;
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease-in-out;
-        height: auto; /* Set height to auto to allow scrolling */
-        max-height: 80vh; /* Limit max height */
-        overflow-y: auto; /* Enable vertical scrolling if content overflows */
-        animation: fadeInScale 1s ease-out forwards;
-    }
-    @keyframes fadeInScale {
-        0% {
-            opacity: 0; /* Start invisible */
-            transform: scale(0.95); /* Slightly smaller */
-        }
-        100% {
-            opacity: 1; /* Fully visible */
-            transform: scale(1); /* Original size */
-        }
-    }
-
-    .backButton {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        border: 2px solid #fff;
-        border-radius: 1rem;
-        font-size: 1.5rem;
-        padding: 5px 15px;
-        color: white;
-        background-color: transparent;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .backButton:hover {
-        background-color: white;
-        color: #111344;
-        transform: scale(1.1);
-    }
-
-    .txtOnImage {
-        font-size: 2.5rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        text-align: center;
-        color: #f9f9f9;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-    }
-
-    .container {
-        padding: 1rem;
+    body {
+        min-height: 100vh;
+        background: url("{% static 'Assets/bg25latest.png' %}") center/cover fixed no-repeat;
+        color: #fff;
+        padding: 20px;
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* ===== TOP BAR (Matching Quiz Template) ===== */
+    .top-bar {
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(12px);
+        border-radius: 40px;
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
         justify-content: space-between;
-        gap: 2rem;
-        width: 100%; /* Make sure the container takes full width */
+        gap: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+        max-width: 1200px;
+        margin-bottom: 30px;
     }
 
-    .container h4 {
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        color: white;
+    }
+
+    .brand img {
+        height: 36px;
+    }
+
+    .back-btn {
+        padding: 8px 22px;
+        border-radius: 30px;
+        background: #000;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+
+    .back-btn:hover {
+        background: #fff;
+        color: #000;
+    }
+
+    /* ===== PROFILE CARD (Glassmorphism) ===== */
+    .profile-card {
+        width: 100%;
+        max-width: 1100px;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(15px);
+        border-radius: 30px;
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        animation: fadeInScale 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeInScale {
+        0% { opacity: 0; transform: scale(0.98); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #7de0ff; /* Light Blue Accent */
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-align: center;
+    }
+
+    .info-group {
+        margin-bottom: 20px;
+    }
+
+    .info-label {
+        color: #7de0ff;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .info-value {
         font-size: 1.1rem;
-        font-weight: 400;
-        margin: 10px 0;
-        line-height: 1.5;
+        margin-top: 5px;
+        opacity: 0.9;
     }
 
-    .container strong {
-        color: #f9d342;
-        font-weight: 600;
+    /* ===== STATUS BOX (Glow Effect) ===== */
+    .status-container {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(125, 224, 255, 0.3);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 0 20px rgba(125, 224, 255, 0.1);
+        height: 100%;
     }
 
-    .glowing-border {
-        position: relative;
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
-        padding: 1rem;
-        margin: 1rem 0;
-        background-color: rgba(0, 0, 0, 0.4);
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 0 0 20px rgba(255, 255, 255, 0.2);
-        transition: all 0.3s ease-in-out;
+    .status-title {
+        color: #f9d342; /* Yellow Accent */
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(249, 211, 66, 0.3);
+        padding-bottom: 10px;
     }
 
-    /* Glowing border animation for smaller screens */
-    @media only screen and (max-width: 768px) {
-        .glowing-border {
-            animation: glow 2s infinite alternate;
-        }
-
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 0 0 20px rgba(255, 255, 255, 0.2);
-            }
-            to {
-                box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
-            }
-        }
-
-        .backButton {
-            font-size: 1.2rem;
-            padding: 5px 10px;
-        }
-
-        .txtOnImage {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .outerBorder-viewProfile {
-            padding: 1rem;
-            margin: 1rem auto;
-            max-width: 90%;
-        }
-
-        .home-logo {
-            height: auto;
-            width: 80px;
-        }
+    .highlight-text {
+        color: #4ecdc4; /* Teal Accent */
+        font-weight: bold;
     }
 
-    @media only screen and (max-width: 576px) {
-        .outerBorder-viewProfile {
-            padding: 0.8rem;
-        }
-
-        .txtOnImage {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .backButton {
-            font-size: 1.1rem;
-            top: 0.5rem;
-            right: 0.5rem;
-        }
-
-        .home-logo {
-            height: 70px;
-            width: 70px;
-        }
+    @media (max-width: 768px) {
+        .profile-card { padding: 25px; }
+        .section-title { font-size: 1.5rem; }
+        .top-bar { border-radius: 20px; padding: 12px; }
+        .brand span { display: none; }
     }
 </style>
 
-<!-- Home Logo on the Body -->
-<a href="{% url 'cit2020:index' %}">
-    <img src="{% static 'Assets/whiteIste.png' %}" alt="Home" class="home-logo">
-</a>
-
-<div class="view-profile outerBorder-viewProfile">
-    <a href="{% url 'cit2020:index' %}">
-        <button type="button" class="btn backButton"><</button>
+<div class="top-bar">
+    <a href="{% url 'cit2020:index' %}" class="brand">
+        <img src="{% static 'Assets/whiteIste.png' %}" alt="Logo" />
+        <span>ISTE - CIT 9.0</span>
     </a>
-    <div class="txtOnImage">Profile</div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-lg-6 mb-2">
-                <h4><strong>Name:</strong> {{ player.name }}</h4>
-                <h4><strong>UserName:</strong> {{ player.userName }}</h4>
-                <h4><strong>Email Id:</strong> {{ player.email }}</h4>
-                <h4><strong>Mobile No:</strong> {{ player.mobile }}</h4>
-                <h4><strong>School/College:</strong> {{ player.institute_name }}</h4>
-                <h4><strong>Year of Study:</strong> {{ player.year_of_study }}</h4>
-                <h4><strong>Department:</strong> {{ player.department }}</h4>
-            </div>
-            <div class="col-md-12 col-lg-6 mb-2">
-                <div class="glowing-border">
-                    {% if player.slot == 0 %}
-                    <h3><strong>Preliminary Round</strong> Select 
-                        <a href="{% url 'cit2020:index' %}"><strong>Slot</strong></a>
-                    </h3>
-                    {% else %}
-                    <h3><strong>Preliminary Round</strong></h3>
-                    <h4><strong style="color:wheat;">Slot:</strong>
-                        {% if player.slot == 1 %} (1) Jan 24, 2025 (9:00 PM - 9:45 PM)
-                        {% elif player.slot == 2 %} (2) Jan 25, 2025 (9:00 PM - 9:45 PM)
-                        {% elif player.slot == 3 %} (3) Jan 26, 2025 (9:00 PM - 9:45 PM)
-                        {% endif %}
-                    </h4>
-                    <h4><strong style="color:wheat;">Score:</strong> {{ player.score }}</h4>
-                    {% if final == False %}
-                    <h4><strong style="color:wheat;">Selected for Final:</strong> --</h4>
-                    {% elif player.qualified == True %}
-                    <h4><strong style="color:wheat;">Selected for Final:</strong> Yes</h4>
-                    {% else %}
-                    <h4><strong style="color:wheat;">Selected for Final:</strong> No</h4>
-                    {% endif %}
-                    {% if player.qualified == True %}
-                    <h3><strong style="color:wheat;">Final Round:</strong></h3>
-                    <h4><strong style="color:wheat;">Slot:</strong> Jan 27, 2025 (9:00 PM - 9:45 PM)</h4>
-                    <h4><strong style="color:wheat;">Score:</strong> {{ player.final_score }}</h4>
-                    {% endif %}
-                    {% endif %}
+    <a href="{% url 'cit2020:index' %}" class="back-btn">← BACK TO HOME</a>
+</div>
+
+<div class="profile-card">
+    <h2 class="section-title">Player Profile</h2>
+    
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-sm-6 info-group">
+                    <p class="info-label">Name</p>
+                    <p class="info-value">{{ player.name }}</p>
                 </div>
+                <div class="col-sm-6 info-group">
+                    <p class="info-label">Username</p>
+                    <p class="info-value">{{ player.userName }}</p>
+                </div>
+                <div class="col-12 info-group">
+                    <p class="info-label">Email Address</p>
+                    <p class="info-value">{{ player.email }}</p>
+                </div>
+                <div class="col-sm-6 info-group">
+                    <p class="info-label">Mobile Number</p>
+                    <p class="info-value">{{ player.mobile }}</p>
+                </div>
+                <div class="col-sm-6 info-group">
+                    <p class="info-label">Year of Study</p>
+                    <p class="info-value">{{ player.year_of_study }}</p>
+                </div>
+                <div class="col-12 info-group">
+                    <p class="info-label">Institute</p>
+                    <p class="info-value">{{ player.institute_name }}</p>
+                </div>
+                <div class="col-12 info-group">
+                    <p class="info-label">Department</p>
+                    <p class="info-value">{{ player.department }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="status-container">
+                {% if player.slot == 0 %}
+                <h3 class="status-title">Tournament Status</h3>
+                <p class="info-value">Preliminary Round: <span class="highlight-text">Not Selected</span></p>
+                <a href="{% url 'cit2020:index' %}" class="btn back-btn mt-3 d-inline-block">Select Slot</a>
+                {% else %}
+                
+                <h3 class="status-title">Preliminary Round</h3>
+                <p class="info-group">
+                    <span class="info-label">Selected Slot:</span><br>
+                    <span class="info-value">
+                        {% if player.slot == 1 %} (1) Jan 17, 2026 19:30
+                        {% elif player.slot == 2 %} (2) Jan 17, 2026 21:00
+                        {% endif %}
+                    </span>
+                </p>
+                <p class="info-group">
+                    <span class="info-label">Current Score:</span><br>
+                    <span class="info-value highlight-text">{{ player.score }}</span>
+                </p>
+                <p class="info-group">
+                    <span class="info-label">Qualified for Final:</span><br>
+                    <span class="info-value">
+                        {% if player.qualified %} <span class="highlight-text">YES</span>
+                        {% else %} <span class="text-danger">NO</span>
+                        {% endif %}
+                    </span>
+                </p>
+
+                {% if player.qualified %}
+                <h3 class="status-title mt-4">Final Round</h3>
+                <p class="info-group">
+                    <span class="info-label">Final Score:</span><br>
+                    <span class="info-value highlight-text">{{ player.final_score }}</span>
+                </p>
+                {% endif %}
+                
+                {% endif %}
             </div>
         </div>
     </div>

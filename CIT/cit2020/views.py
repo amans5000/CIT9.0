@@ -9,8 +9,8 @@ from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from .forms import Profileform
 
-slot1_start=datetime.datetime(2026, 1, 17, 19, 30, 00, 701322)
-slot1_end=datetime.datetime(2026, 1, 17, 20, 15, 00, 701322)
+slot1_start=datetime.datetime(2026, 1, 17, 00, 1, 00, 701322)
+slot1_end=datetime.datetime(2026, 1, 17, 2, 00, 00, 701322)
 
 slot2_start=datetime.datetime(2026, 1, 17, 21, 00, 00, 701322)
 slot2_end=datetime.datetime(2026, 1, 17, 21, 45, 00, 701322)
@@ -18,10 +18,10 @@ slot2_end=datetime.datetime(2026, 1, 17, 21, 45, 00, 701322)
 # slot3_start=datetime.datetime(2025, 1, 26, 21, 00, 00, 701322)
 # slot3_end=datetime.datetime(2025, 1, 26, 21, 45, 00, 701322)
 
-round1_result=datetime.datetime(2026, 1, 18, 10, 30, 00, 701322)
+round1_result=datetime.datetime(2026, 1, 17, 10, 30, 00, 701322)
 
-# final_start=datetime.datetime(2025, 1, 27, 21, 00, 00, 701322)
-# final_end=datetime.datetime(2025, 1, 27, 21, 45, 00, 701322)
+final_start=datetime.datetime(2026, 1, 17, 00,1, 00, 701322)
+final_end=datetime.datetime(2026, 1, 17,23, 59, 00, 701322)
 
 def index(request):
     user = request.user
@@ -33,12 +33,8 @@ def index(request):
             return render(request, 'home_page.html')
         
         if player.details_updated == False:
-            # return redirect(reverse_lazy('cit2020:update_profile'))
-            # return render(request, 'home_page.html')
-
-        # elif player.qualified==False and datetime.datetime.now() > round1_result:
-        #     return render(request, 'notQualified.html')
-            
+            return redirect(reverse_lazy('cit2020:update_profile'))
+       
         elif player.slot < 1:
             return render(request, 'forms.html')
               
@@ -302,3 +298,9 @@ def qualify(request, cutoff):
         return redirect(reverse_lazy('cit2020:index'))
     else:
         return redirect(reverse_lazy('cit2020:rules'))
+    
+def schedule(request):
+    return render(request, 'schedule.html')
+
+def faq(request):
+    return render(request, 'faq.html')
