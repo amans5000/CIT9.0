@@ -1,30 +1,17 @@
 <div class="outerBorder-navPage glowing-circle">
-  
   <div class="buttonBox-nav">
-    {% csrf_token %}
-    {% if user.is_authenticated %}
-    <a href="{% url 'cit2020:quiz' %}">
-      start</a
-    >
+    {% csrf_token %} {% if user.is_authenticated %}
+    <a href="{% url 'cit2020:quiz' %}"> start</a>
     {% endif %}
     <br />
-    <a href="{% url 'cit2020:about' %}">
-      About
-      
-    </a>
+    <a href="{% url 'cit2020:about' %}"> About </a>
     <br />
-    <a href="{% url 'cit2020:rules' %}">
-      Instructions
-    </a>
+    <a href="{% url 'cit2020:rules' %}"> Instructions </a>
     <br />
-    <a href="{% url 'cit2020:lboard' %}">
-      Leaderboard
-    </a>
+    <a href="{% url 'cit2020:lboard' %}"> Leaderboard </a>
     <br />
     {% if user.is_authenticated %}
-    <a href="{% url 'cit2020:view_profile' %}">
-      view_profile
-    </a>
+    <a href="{% url 'cit2020:view_profile' %}"> view_profile </a>
     {% endif %}
     <br />
 
@@ -41,7 +28,12 @@
   {% if user.is_authenticated %}
   <form method="post" action="{% url 'logout' %}">
     {% csrf_token %}
-    <button type="submit" class="start navButton glowing-circle-backButton logoutBtn">Log Out </button>
+    <button
+      type="submit"
+      class="start navButton glowing-circle-backButton logoutBtn"
+    >
+      Log Out
+    </button>
   </form>
 </div>
 {% endif %}

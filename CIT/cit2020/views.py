@@ -9,19 +9,19 @@ from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from .forms import Profileform
 
-slot1_start=datetime.datetime(2025, 1, 24, 21, 00, 00, 701322)
-slot1_end=datetime.datetime(2025, 1, 24, 21, 45, 00, 701322)
+slot1_start=datetime.datetime(2026, 1, 17, 19, 30, 00, 701322)
+slot1_end=datetime.datetime(2026, 1, 17, 20, 15, 00, 701322)
 
-slot2_start=datetime.datetime(2025, 1, 25, 21, 00, 00, 701322)
-slot2_end=datetime.datetime(2025, 1, 25, 21, 45, 00, 701322)
+slot2_start=datetime.datetime(2026, 1, 17, 21, 00, 00, 701322)
+slot2_end=datetime.datetime(2026, 1, 17, 21, 45, 00, 701322)
 
-slot3_start=datetime.datetime(2025, 1, 26, 21, 00, 00, 701322)
-slot3_end=datetime.datetime(2025, 1, 26, 21, 45, 00, 701322)
+# slot3_start=datetime.datetime(2025, 1, 26, 21, 00, 00, 701322)
+# slot3_end=datetime.datetime(2025, 1, 26, 21, 45, 00, 701322)
 
-round1_result=datetime.datetime(2025, 1, 27, 10, 30, 00, 701322)
+round1_result=datetime.datetime(2026, 1, 18, 10, 30, 00, 701322)
 
-final_start=datetime.datetime(2025, 1, 27, 21, 00, 00, 701322)
-final_end=datetime.datetime(2025, 1, 27, 21, 45, 00, 701322)
+# final_start=datetime.datetime(2025, 1, 27, 21, 00, 00, 701322)
+# final_end=datetime.datetime(2025, 1, 27, 21, 45, 00, 701322)
 
 def index(request):
     user = request.user
@@ -33,7 +33,8 @@ def index(request):
             return render(request, 'home_page.html')
         
         if player.details_updated == False:
-            return redirect(reverse_lazy('cit2020:update_profile'))
+            # return redirect(reverse_lazy('cit2020:update_profile'))
+            # return render(request, 'home_page.html')
 
         # elif player.qualified==False and datetime.datetime.now() > round1_result:
         #     return render(request, 'notQualified.html')
@@ -252,8 +253,8 @@ def forms(request):
         elif slot == '2':
             player.slot = 2
           
-        elif slot == '3':
-            player.slot = 3
+        # elif slot == '3':
+        #     player.slot = 3
 
         player.save()
 

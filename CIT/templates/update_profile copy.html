@@ -167,7 +167,12 @@
         <img src="{% static './Assets/whiteIste.png' %}" alt="ISTE Logo">
         <span>ISTE - CIT 9.0</span>
     </a>
-   
+    <ul class="nav-links">
+        <li><a href="{% url 'cit2020:index' %}">Home</a></li>
+        <li><a href="{% url 'cit2020:index' %}#about">About</a></li>
+        <li><a href="{% url 'cit2020:rules' %}">Instructions</a></li>
+        <li><a href="{% url 'cit2020:lboard' %}">Leaderboard</a></li>
+    </ul>
 </nav>
 
 <div class="form-wrapper">
