@@ -5,5 +5,4 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CIT.settings')
 
 application = get_wsgi_application()
 
-# Add this line specifically for Vercel
 app = application
