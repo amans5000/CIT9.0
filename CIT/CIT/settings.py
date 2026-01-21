@@ -109,8 +109,8 @@ DATABASES = {
 }
 
 
-DATABASE_URL = config('DATABASE_URL')
-DATABASES["default"] = dj_database_url.parse(DATABASE_URL)
+# DATABASE_URL = config('DATABASE_URL')
+# DATABASES["default"] = dj_database_url.parse(DATABASE_URL)
 
 
 # Password validation
@@ -197,7 +197,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_user',
     'social_core.pipeline.user.get_username',
     'social_core.pipeline.user.create_user',
-    'cit2020.views.save_profile',  # <--- set the path to the function
+    'cit2020.views.save_profile',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
